@@ -1,0 +1,38 @@
+% Knowledge Base
+student(john).
+student(mary).
+student(peter).
+
+teacher(prof_smith).
+teacher(dr_jones).
+teacher(mrs_davis).
+
+subject(math).
+subject(physics).
+subject(english).
+
+% Relationship: student takes subject
+takes_subject(john, math).
+takes_subject(mary, physics).
+takes_subject(peter, english).
+
+% Relationship: teacher teaches subject
+teaches_subject(prof_smith, math).
+teaches_subject(dr_jones, physics).
+teaches_subject(mrs_davis, english).
+
+% Relationship: student has code for subject
+has_code(john, math, 101).
+has_code(mary, physics, 202).
+has_code(peter, english, 303).
+
+% Question Generator
+generate_question(Question) :-
+    student(Student),
+    subject(Subject),
+    teacher(Teacher),
+    has_code(Student, Subject, Code),
+    format(atom(Question), 'What is the code for ~w in the ~w class taught by ~w?', [Subject, Student, Teacher]).
+
+% Example Usage
+?- generate_question(Question).
