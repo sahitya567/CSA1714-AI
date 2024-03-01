@@ -1,0 +1,39 @@
+import math
+import random
+
+def objective_function(x):
+    # Example objective function (you can replace it with your own)
+    return math.sin(x) + math.sin(2 * x)
+
+def simulated_annealing(initial_solution, temperature, cooling_rate, iterations):
+    current_solution = initial_solution
+    current_energy = objective_function(current_solution)
+
+    for i in range(iterations):
+        # Generate a random neighboring solution
+        neighbor_solution = current_solution + random.uniform(-0.1, 0.1)
+        neighbor_energy = objective_function(neighbor_solution)
+
+        # Calculate the change in energy
+        energy_difference = neighbor_energy - current_energy
+
+        # Accept the neighbor solution if it has lower energy or with a certain probability
+        if energy_difference < 0 or random.random() < math.exp(-energy_difference / temperature):
+            current_solution = neighbor_solution
+            current_energy = neighbor_energy
+
+        # Cool down the temperature
+        temperature *= cooling_rate
+
+    return current_solution, current_energy
+
+# Example Usage:
+initial_solution = 2.0  # Starting point for the optimization
+initial_temperature = 100.0
+cooling_rate = 0.99
+iterations = 1000
+
+result_solution, result_energy = simulated_annealing(initial_solution, initial_temperature, cooling_rate, iterations)
+
+print("Result: x =", result_solution)
+print("Minimum Energy:", result_energy)
