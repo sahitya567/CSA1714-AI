@@ -1,0 +1,18 @@
+% Facts
+disease(diabetes).
+disease(hypertension).
+disease(obesity).
+
+% Rules for Dietary Recommendations
+diet_recommendation(diabetes, 'Low-carbohydrate diet with emphasis on whole grains, lean proteins, and vegetables. Limit sugar and processed foods.').
+diet_recommendation(hypertension, 'DASH (Dietary Approaches to Stop Hypertension) diet, emphasizing fruits, vegetables, lean proteins, and low-fat dairy. Limit salt intake.').
+diet_recommendation(obesity, 'Balanced diet with portion control. Focus on whole foods, fruits, vegetables, lean proteins, and whole grains. Regular physical activity is essential.').
+
+% Query to Get Diet Recommendation for a Specific Disease
+get_diet_recommendation(Disease, Recommendation) :-
+    disease(Disease),
+    diet_recommendation(Disease, Recommendation).
+
+% Example Usage:
+% ?- get_diet_recommendation(diabetes, Recommendation).
+% Result: Recommendation = 'Low-carbohydrate diet with emphasis on whole grains, lean proteins, and vegetables. Limit sugar and processed foods.'
