@@ -1,0 +1,11 @@
+?- likes(ram, X).
+% This will return X = mango.
+
+?- is_a(seema, girl).
+% This will return true.
+
+?- is_red(rose).
+% This will return true.
+
+?- owns(john, gold).
+% This will return true.
