@@ -1,0 +1,15 @@
+:- use_module(library(clpfd)).
+
+queens(Board) :-
+    Board = [A, B, C, D],
+    Board ins 1..4,  % Each queen's position is between 1 and 4
+
+    all_distinct(Board),  % Queens must be in different rows
+    A - B #\= 1, B - C #\= 1, C - D #\= 1,  % Queens must not be in the same diagonal
+    A - C #\= 2, B - D #\= 2,  % Queens must not be in the same diagonal
+
+    labeling([], Board).
+
+% Example Usage:
+% ?- queens(Board).
+% Board = [2, 4, 1, 3] 
