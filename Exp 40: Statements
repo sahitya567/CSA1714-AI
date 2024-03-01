@@ -1,0 +1,14 @@
+% Facts
+child(X) :- boy(X).
+child(X) :- girl(X).
+
+toy(X, doll) :- child(X).
+toy(X, train) :- child(X).
+toy(X, lump_of_coal) :- child(X).
+
+not_doll(X) :- boy(X).
+not_lump_of_coal(X) :- good_child(X).
+
+boy(jack).
+
+good_child(jack). % Assuming Jack is a good child, modify accordingly based on additional information.
