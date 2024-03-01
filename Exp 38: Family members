@@ -1,0 +1,57 @@
+% Facts: Family relationships
+parent(john, bob).
+parent(john, mary).
+parent(mary, sue).
+parent(bob, ann).
+parent(bob, mike).
+
+% Rules: Definitions of family relationships
+father(Father, Child) :-
+    parent(Father, Child),
+    male(Father).
+
+mother(Mother, Child) :-
+    parent(Mother, Child),
+    female(Mother).
+
+brother(Brother, Sibling) :-
+    male(Brother),
+    parent(Parent, Brother),
+    parent(Parent, Sibling),
+    Brother \= Sibling.
+
+sister(Sister, Sibling) :-
+    female(Sister),
+    parent(Parent, Sister),
+    parent(Parent, Sibling),
+    Sister \= Sibling.
+
+grandchild(Grandchild, Grandparent) :-
+    parent(Parent, Grandchild),
+    parent(Grandparent, Parent).
+
+grandfather(Grandfather, Grandchild) :-
+    male(Grandfather),
+    grandchild(Grandchild, Grandfather).
+
+uncle(Uncle, NieceNephew) :-
+    male(Uncle),
+    parent(Parent, NieceNephew),
+    brother(Uncle, Parent).
+
+% Example Queries:
+% a. Father(X, bob)
+% ?- father(X, bob).
+% Result: X = john
+
+% b. Grandson(X, Y)
+% ?- grandson(X, Y).
+% Result: X = ann, Y = john; X = mike, Y = john
+
+% c. Uncle(bill, Sue)
+% ?- uncle(bill, sue).
+% Result: true
+
+% d. Mother(mary, X)
+% ?- mother(mary, X).
+% Result: X = sue, X = ann
