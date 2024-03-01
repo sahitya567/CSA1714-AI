@@ -1,0 +1,64 @@
+% Facts: Symptoms and Conditions
+symptom(fever).
+symptom(cough).
+symptom(headache).
+symptom(sore_throat).
+symptom(rash).
+symptom(fatigue).
+
+condition(flu).
+condition(cold).
+condition(migraine).
+condition(strep_throat).
+condition(measles).
+condition(chronic_fatigue_syndrome).
+
+% Rules for Diagnosis
+diagnosis(Patient, Condition) :-
+    write('Do you have any symptoms? (yes/no): '),
+    read(Response),
+    Response = yes,
+    collect_symptoms(Patient),
+    diagnose_conditions(Patient, Conditions),
+    list_conditions(Conditions).
+
+diagnose_conditions(Patient, Conditions) :-
+    findall(Condition, (condition(Condition), check_symptoms(Patient, Condition)), Conditions).
+
+check_symptoms(Patient, Condition) :-
+    symptom(Symptom),
+    write('Do you have '), write(Symptom), write('? (yes/no): '),
+    read(Response),
+    Response = yes,
+    asserta(has_symptom(Patient, Symptom)),
+    symptom_of_condition(Symptom, Condition),
+    fail.
+
+check_symptoms(_, _).
+
+symptom_of_condition(fever, flu).
+symptom_of_condition(cough, flu).
+symptom_of_condition(headache, migraine).
+symptom_of_condition(sore_throat, strep_throat).
+symptom_of_condition(rash, measles).
+symptom_of_condition(fatigue, chronic_fatigue_syndrome).
+
+% Interactive Interface for Patients
+collect_symptoms(Patient) :-
+    retractall(has_symptom(Patient, _)),
+    diagnosis(Patient, _).
+
+list_conditions([]) :-
+    write('\nNo specific conditions identified. Consult a healthcare professional for accurate diagnosis.\n').
+
+list_conditions(Conditions) :-
+    write('\nPossible conditions based on symptoms:\n'),
+    list_conditions_recursive(Conditions).
+
+list_conditions_recursive([]).
+list_conditions_recursive([Condition | Rest]) :-
+    write('- '), write(Condition), nl,
+    list_conditions_recursive(Rest).
+
+% Example Query: Call `collect_symptoms/1` to start the interactive interface
+% ?- collect_symptoms(john).
