@@ -1,0 +1,34 @@
+% Facts
+location(new_york, new_york_state).
+location(boston, massachusetts).
+location(san_francisco, california).
+
+stays(john, new_york).
+stays(mary, boston).
+stays(jane, san_francisco).
+stays(bob, boston).
+
+% Rules
+state_of_person(Person, State) :-
+    stays(Person, City),
+    location(City, State).
+
+% Display: List of persons, state, and city
+list_persons_states_cities :-
+    write('Persons, State, City:\n'),
+    stays(Person, City),
+    location(City, State),
+    write(Person), write(', '), write(State), write(', '), write(City), nl,
+    fail.
+
+% Display: Given person, find the state in which he is staying
+display_state_of_person(Person) :-
+    state_of_person(Person, State),
+    write(Person), write(' stays in '), write(State), nl.
+
+% Example Queries:
+% 1. Display list of persons, state, and city
+% ?- list_persons_states_cities.
+
+% 2. Given person, find the state in which he is staying
+% ?- display_state_of_person(john).
